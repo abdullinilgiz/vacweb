@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Список вакансий</title>
+    <link rel="stylesheet" href="{% static 'css/table.css' %}">
+</head>
+<body>
+    <h1>Список вакансий</h1>
+    <a method="post" href="{% url 'vacancy:create_vacancy' %}"
+        >создать вакансию</a>
+    <ul class="responsive-table">
+        <li class="table-header">
+            <div class="col col-1">Должность</div>
+            <div class="col col-2">Образование</div>
+            <div class="col col-3">Регион</div>
+            <div class="col col-4">Навыки</div>
+            <div class="col col-5">Расписание</div>
+        </li>
+        {% for vacancy in vacancies reversed%}
+        <li class="table-row">
+            <div class="col col-1" data-label="Job Id">{{ vacancy.position }}</div>
+            <div class="col col-2" data-label="Customer Name">{{ vacancy.get_education_display }}</div>
+            <div class="col col-3" data-label="Amount">{{ vacancy.get_region_display }}</div>
+            <div class="col col-4" data-label="Payment Status">{{ vacancy.skills }}</div>
+            <div class="col col-5" data-label="Payment Status">{{ vacancy.get_schedule_display }}</div>
+        </li>
+        {% endfor %}
+    </ul>
+    <table>
+        <thead>
+            <tr>
+                <th>Должность</th>
+                <th>Образование</th>
+                <th>Регион</th>
+                <th>Навыки</th>
+                <th>Расписание</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vacancy in vacancies %}
+            <tr>
+                <td>{{ vacancy.position }}</td>
+                <td>{{ vacancy.education }}</td>
+                <td>{{ vacancy.region }}</td>
+                <td>{{ vacancy.skills }}</td>
+                <td>{{ vacancy.schedule }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
